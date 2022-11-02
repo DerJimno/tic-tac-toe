@@ -31,8 +31,20 @@ class TicTacToe
   def full_board?
     board.all? { |element| element == "X" || element == "O"}
   end
+
 # Game things
 
+  def turn
+    puts "Please, choose a number from 1-9"
+    number = gets.chomp.to_i 
+  
+    if valid_move?(number)
+      update_board(number)
+      display_board
+    else
+      puts "Invalid!"
+    end
+  end
 end
 
 game = TicTacToe.new
