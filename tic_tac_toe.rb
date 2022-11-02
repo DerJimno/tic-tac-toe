@@ -15,6 +15,9 @@ class TicTacToe
          "#{@board[6]}"'|'"#{@board[7]}"'|'"#{@board[8]}"
   end
 
+  def update_board(input, symbol)
+    @board[input - 1] = symbol
+  end
 end
 
 game = TicTacToe.new
