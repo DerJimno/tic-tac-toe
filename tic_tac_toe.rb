@@ -10,9 +10,11 @@ class TicTacToe
   end
 
   def display_board
-    puts "#{@board[0]}"'|'"#{@board[1]}"'|'"#{@board[2]}" "\n" +
-         "#{@board[3]}"'|'"#{@board[4]}"'|'"#{@board[5]}" "\n" +
-         "#{@board[6]}"'|'"#{@board[7]}"'|'"#{@board[8]}"
+    puts <<-MULTI
+      #{@board[0]}|#{@board[1]}|#{@board[2]}
+      #{@board[3]}|#{@board[4]}|#{@board[5]}
+      #{@board[6]}|#{@board[7]}|#{@board[8]}
+    MULTI
   end
 
   def update_board(input, symbol)
@@ -21,3 +23,4 @@ class TicTacToe
 end
 
 game = TicTacToe.new
+
