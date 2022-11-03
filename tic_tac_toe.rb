@@ -50,15 +50,12 @@ class TicTacToe
     WIN_COMBINATIONS.any? do |comb|
       [board[comb[0]], board[comb[1]], board[comb[2]]].uniq.length == 1 
     end
-
   end
+
+  def draw?
+    full_board? == true && won? == false
+  end
+
 end
 
 game = TicTacToe.new
-game.turn
-game.turn
-game.turn
-p game.won?
-
-
-
