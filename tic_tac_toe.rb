@@ -46,18 +46,26 @@ class TicTacToe
     end
   end
 
-  def won?
-    WIN_COMBINATIONS.any? do |comb|
-      [board[comb[0]], board[comb[1]], board[comb[2]]].uniq.length == 1 
+  def winner?
+    if WIN_COMBINATIONS.any? do |comb|
+      [board[comb[0]], board[comb[1]], board[comb[2]]].uniq == ["X"]
+      end
+      true
+    elsif WIN_COMBINATIONS.any? do |comb|
+      [board[comb[0]], board[comb[1]], board[comb[2]]].uniq == ["O"]
+      end
+      false
+    else 
+      nil
     end
   end
 
   def draw?
-    full_board? == true && won? == false
+    full_board? == true && winner? == nil
   end
 
   def over?
-    draw? == true || won? == true
+    draw? == true || winner? == true || winner? == false
   end
 
 end
