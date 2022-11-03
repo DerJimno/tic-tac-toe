@@ -20,7 +20,7 @@ class TicTacToe
     MULTI
   end
 
-  def update_board(input, symbol = "X")
+  def update_board(input, symbol = "O")
     board[input - 1] = symbol
   end
 
@@ -56,6 +56,11 @@ class TicTacToe
     full_board? == true && won? == false
   end
 
+  def over?
+    draw? == true || won? == true
+  end
+
 end
 
 game = TicTacToe.new
+
