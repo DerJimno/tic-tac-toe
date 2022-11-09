@@ -1,6 +1,6 @@
 class TicTacToe
 # Board things 
-  attr_reader :board
+  attr_reader :board, :symbol, :first_symbol, :second_symbol, :first_player, :second_player, :current_player, :number
   WIN_COMBINATIONS = [
     [0,1,2], [3,4,5], [6,7,8], [0,4,8],
     [2,4,6], [0,3,6], [1,4,7], [2,5,8]
@@ -20,7 +20,7 @@ class TicTacToe
     MULTI
   end
 
-  def update_board(input, symbol = "O")
+  def update_board(input, symbol)
     board[input - 1] = symbol
   end
 
@@ -29,30 +29,37 @@ class TicTacToe
   end
 
   def full_board?
-    board.all? { |element| element == "X" || element == "O"}
+    board.all? { |element| element == first_symbol || element == second_symbol}
   end
 
 # Game things
 
   def turn
-    puts "Please, choose a number from 1-9"
-    number = gets.chomp.to_i 
+    puts "#{current_player}, choose from 1-9"
+    @number = gets.chomp.to_i 
   
     if valid_move?(number)
-      update_board(number)
+      update_board(number, symbol)
       display_board
     else
-      puts "Invalid!"
+      puts "-----Invalid move!-----"
+      display_board
+      until valid_move?(number)
+        puts "Please #{current_player}, only from 1-9"
+        @number = gets.chomp.to_i
+      end
+      update_board(number, symbol)
+      display_board
     end
   end
 
   def winner?
     if WIN_COMBINATIONS.any? do |comb|
-      [board[comb[0]], board[comb[1]], board[comb[2]]].uniq == ["X"]
+      [board[comb[0]], board[comb[1]], board[comb[2]]].uniq == [first_symbol]
       end
       true
     elsif WIN_COMBINATIONS.any? do |comb|
-      [board[comb[0]], board[comb[1]], board[comb[2]]].uniq == ["O"]
+      [board[comb[0]], board[comb[1]], board[comb[2]]].uniq == [second_symbol]
       end
       false
     else 
@@ -67,8 +74,49 @@ class TicTacToe
   def over?
     draw? == true || winner? == true || winner? == false
   end
+  
+  def play
+    puts "Welcome to Tic-Tac-Toe CLI-Game"
+    puts "Player 1, What's your name?"
+    @first_player = gets.chomp
+    puts "Heyy #{first_player}, choose one Letter or Symbol"
+    @first_symbol = gets.chomp
 
+    puts "Player 2, What's your name?"
+    @second_player = gets.chomp
+    puts "Hello #{second_player}, choose one Letter or Symbol except \"#{first_symbol}\""
+    @second_symbol = gets.chomp
+    until second_symbol != first_symbol
+      puts "#{first_player} chose #{first_symbol} already!"
+      @second_symbol = gets.chomp
+      if second_symbol != first_symbol
+        puts "You play #{second_symbol}"
+      end
+    end
+    
+    display_board
+    
+    until over?
+      @symbol = @first_symbol
+      @current_player = @first_player
+      turn
+      if symbol == first_symbol && winner? == nil && draw? == false
+        @symbol = second_symbol
+        @current_player = second_player
+        turn
+      end
+      
+    end
+    case winner?
+    when true
+      puts "#{first_player} wins."
+    when false
+      puts "#{second_player} wins."
+    end
+    if draw?
+      puts "Game Over! it's a draw."
+    end
+  end
 end
-
 game = TicTacToe.new
-
+game.play
