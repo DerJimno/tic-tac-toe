@@ -19,19 +19,19 @@ class TicTacToe
 
     MULTI
   end
-
+  private
   def update_board(input, symbol)
     board[input - 1] = symbol
   end
-
+  public
   def valid_move?(input)
     board[input - 1] == input
   end
-
+  
   def full_board?
     board.all? { |element| element == first_symbol || element == second_symbol}
   end
-
+  
 # Game things
 
   def turn
@@ -52,7 +52,7 @@ class TicTacToe
       display_board
     end
   end
-
+  
   def winner?
     if WIN_COMBINATIONS.any? do |comb|
       [board[comb[0]], board[comb[1]], board[comb[2]]].uniq == [first_symbol]
@@ -90,7 +90,7 @@ class TicTacToe
       input
     end
   end
-
+  
   def play
     puts "Welcome to Tic-Tac-Toe CLI-Game"
     puts "Player 1, What's your name?"
