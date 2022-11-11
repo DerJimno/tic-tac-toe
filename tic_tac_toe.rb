@@ -74,28 +74,43 @@ class TicTacToe
   def over?
     draw? == true || winner? == true || winner? == false
   end
-  
+
+  def get_symbol
+    input = gets.chomp
+    is_it = input.to_i != 0 || input[1].is_a?(String) || input.empty?
+    if is_it
+      until is_it == false
+        puts "-----Invalid input!-----"
+        puts "Try 1 Letter or Symbol"
+        input = gets.chomp
+        is_it = input.to_i != 0 || input[1].is_a?(String) || input.empty?
+      end
+      input
+    else
+      input
+    end
+  end
+
   def play
     puts "Welcome to Tic-Tac-Toe CLI-Game"
     puts "Player 1, What's your name?"
     @first_player = gets.chomp
-    puts "Heyy #{first_player}, choose one Letter or Symbol"
-    @first_symbol = gets.chomp
+    puts "Heyy #{first_player}, choose 1 Letter or Symbol"
+    @first_symbol = get_symbol
 
     puts "Player 2, What's your name?"
     @second_player = gets.chomp
-    puts "Hello #{second_player}, choose one Letter or Symbol except \"#{first_symbol}\""
-    @second_symbol = gets.chomp
+    puts "Hello #{second_player}, choose 1 Letter or Symbol except \"#{first_symbol}\""
+    @second_symbol = get_symbol
     until second_symbol != first_symbol
-      puts "#{first_player} chose #{first_symbol} already!"
-      @second_symbol = gets.chomp
+      puts "#{first_player} already chose #{first_symbol}!"
+      @second_symbol = get_symbol
       if second_symbol != first_symbol
         puts "You play #{second_symbol}"
       end
     end
     
     display_board
-    
     until over?
       @symbol = @first_symbol
       @current_player = @first_player
@@ -105,7 +120,6 @@ class TicTacToe
         @current_player = second_player
         turn
       end
-      
     end
     case winner?
     when true
